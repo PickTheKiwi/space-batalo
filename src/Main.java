@@ -9,9 +9,6 @@
  */
 
 public class Main {
-    private int x;
-    private int y;
-    private int z;
     final static int players = 2; // Never changes
     public static void main(String[] args) {
         // Create 2 arrays of size 10
@@ -24,7 +21,7 @@ public class Main {
             }
         }
 
-        // Repeat the last loop
+        // Repeat the last loop but print the grid
         for (int z=0;z<players;z++) { // Loop through the z-axis
             for (int y = 0; y < 10; y++) { // Loop through the y-axis
                 for (int x = 0; x < 10; x++) { // Loop through the x-axis
@@ -34,6 +31,5 @@ public class Main {
             }
             System.out.println(); // Prints a new line
         }
-
     }
 }
