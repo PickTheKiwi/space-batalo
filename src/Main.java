@@ -11,13 +11,13 @@ public class Main {
     final static int botCount = 1; // Amount of bots in game, I chose to do this in case of more than one bot playing
     final static int playerCount = humanCount + botCount; // Total players, including both humans and bots
 
-    public int[][][] grids = new int[10][10][playerCount];
+    final static int gridSize = 10; // Size of grid
 
     public static void main(String[] args) {
         // load the Player class into as many objects as playerCount says
         Player[] players = new Player[playerCount];
         for (int x = 0; x < playerCount; x++) { // For as many players as there are
-            players[x] = new Player(true, playerCount); // Create a new player
+            players[x] = new Player(true, playerCount, gridSize); // Create a new player
         }
         players[0].viewBoard(); // View the board
     }
