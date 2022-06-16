@@ -6,6 +6,7 @@
  * @author Seb White
  * @version 1
  */
+
 public class Player {
     public int players; // Amount of players
     public boolean isBot; // For checks if a bot should play when this is called
@@ -30,10 +31,10 @@ public class Player {
         }
     }
 
-
     public void viewBoard() {
         // print the grid
-        char Character = 'A';
+        char Character = '\u0030';
+        System.out.println("\n");
         for (int z = 0; z < players; z++) {
             int row = 0;
             System.out.print("X⼁"); // Prints the X in the top left corner
@@ -43,7 +44,7 @@ public class Player {
             }
             System.out.println();
             System.out.print("-\uD83D\uDFA1"); // Just to make it look nicer
-            for (int x = 0; x < (gridSize*2)-1; x++) {
+            for (int x = 0; x < (gridSize * 2) - 1; x++) {
                 System.out.print("-"); // Prints divider between row numbers and grid
             }
 
@@ -55,8 +56,11 @@ public class Player {
                     System.out.print(grids[x][y][z] + " "); // Prints the cell in the grid
                 }
             }
-            System.out.println();
-            System.out.println(); // Creates a gap between the boards
+            System.out.println("\n"); // Creates a gap between the boards
         }
+    }
+    public void playerSetup(int xPosition, char yPosition, String alignment) { // This is where the player will set up their ships on the grid
+        int xPos = xPosition; // Sets number
+        int yPos = yPosition - 'a' + 1; // Converts the number to a number
     }
 }
