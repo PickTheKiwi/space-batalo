@@ -17,6 +17,9 @@ public class Main {
 
     final static int gridSize = 10; // Size of grid
 
+    public static String alignment; // Where the alignment will be saved temporarily. Will only be used to set up the ships.
+    public static String positions; // Where the positions will be saved temporarily
+
     public static void main(String[] args) {
         // load the Player class into as many objects as playerCount says
         Player[] players = new Player[playerCount];
@@ -30,5 +33,9 @@ public class Main {
         for (int x = 0; x < playerCount; x++) { // For as many players as there are
             players[x].viewBoard(); // View the board
         }
+
+
     }
+
+
 }

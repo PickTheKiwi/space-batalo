@@ -59,8 +59,26 @@ public class Player {
             System.out.println("\n"); // Creates a gap between the boards
         }
     }
-    public void playerSetup(int xPosition, char yPosition, String alignment) { // This is where the player will set up their ships on the grid
-        int xPos = xPosition; // Sets number
-        int yPos = yPosition - 'a' + 1; // Converts the number to a number
+    public void playerSetup(String positions, String alignment) { // This is where the player will set up their ships on the grid
+
+    }
+
+    // check if the board has had all ships removed
+    public boolean isGameOver() {
+        int count = 0;
+        for (int z = 0; z < players; z++) {
+            for (int y = 0; y < gridSize; y++) {
+                for (int x = 0; x < gridSize; x++) {
+                    if (grids[x][y][z] == 0 || grids[x][y][z] == 9) {
+                        count++;
+                    }
+                }
+            }
+        }
+        if (count == (gridSize * gridSize * players)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
