@@ -11,7 +11,7 @@ public class Player {
     public int players; // Amount of players
     public boolean isBot; // For checks if a bot should play when this is called
     public int gridSize; // Where grid size will be saved
-    private static int[][][] grids;
+    private int[][][] grids;
 
 
     public Player(Boolean isHuman, int playerCount, int sizeOfGrid) {
@@ -33,24 +33,24 @@ public class Player {
 
     public void viewBoard() {
         // print the grid
-        char Character = '\u0030';
+        char Character = '\u0041';
         System.out.println("\n");
         for (int z = 0; z < players; z++) {
             int row = 0;
-            System.out.print("X⼁"); // Prints the X in the top left corner
+            System.out.print("X\u2551"); // Prints the X in the top left corner
             for (int x = 0; x < gridSize; x++) {
                 System.out.print(row + " "); // Prints the column numbers above the grid
                 row++; // Increments the column number
             }
             System.out.println();
-            System.out.print("-\uD83D\uDFA1"); // Just to make it look nicer
+            System.out.print("\u2550\u256C"); // Just to make it look nicer
             for (int x = 0; x < (gridSize * 2) - 1; x++) {
-                System.out.print("-"); // Prints divider between row numbers and grid
+                System.out.print("\u2550"); // Prints divider between row numbers and grid
             }
 
             for (int y = 0; y < gridSize; y++) {
                 System.out.println(); // Prints to next line
-                System.out.print(Character + "⼁"); // Prints the row numbers to the left of the grid
+                System.out.print(Character + "\u2551"); // Prints the row numbers to the left of the grid
                 Character++; // Increments the row number
                 for (int x = 0; x < gridSize; x++) {
                     System.out.print(grids[x][y][z] + " "); // Prints the cell in the grid
@@ -60,28 +60,38 @@ public class Player {
         }
     }
 
-    public void playerSetup(String positions, String alignment, String shipType) { // This is where the player will set up their ships on the grid
-        // TODO: Start by checking if the ship can be placed in that position (no colisions or leaving board)
-        // TODO: Place ship
-        if()
+    public boolean positionLengthCheck(String positions) {
+        // check to made sure positions entered is valid, if not, print and error and return false
+        if (positions.length() != 2) {
+            System.out.println("Invalid positions entered");
+            System.out.println("Issue: Position entered is too long.\n ");
+            return(false);
+        }
+        else {return(true);}
+    }
+
+    public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
+        // convert positions to two separate variables
+
+            // check to make sure ship position doesn't go off the board
+        if (positions.charAt(0) > gridSize || positions.charAt(1) > gridSize) {
+            System.out.println("Invalid positions entered");
+            return;
+        }
     }
 
     // check if the board has had all ships removed
-    public boolean isGameOver() {
+    public boolean isGameOver(int playerNumber) {
         int count = 0;
-        for (int z = 0; z < players; z++) {
-            for (int y = 0; y < gridSize; y++) {
-                for (int x = 0; x < gridSize; x++) {
-                    if (grids[x][y][z] == 0 || grids[x][y][z] == 9) {
-                        count++;
-                    }
+        // loop for each cell (with the x, y, and x loops)
+        for (int y = 0; y < gridSize; y++) {
+            for (int x = 0; x < gridSize; x++) {
+                if (grids[x][y][playerNumber] == 0 || grids[x][y][playerNumber] == 9) { // checks if cell is empty or hit
+                        count++; //
                 }
             }
         }
-        if (count == (gridSize * gridSize * players)) {
-            return true;
-        } else {
-            return false;
-        }
+        // if each cell is either empty or hit. return true, otherwise return false
+        return count == (gridSize * gridSize); // Initially an if statement, but I realised it could be simplified
     }
 }
