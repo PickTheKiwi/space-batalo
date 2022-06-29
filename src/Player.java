@@ -59,8 +59,11 @@ public class Player {
             System.out.println("\n"); // Creates a gap between the boards
         }
     }
-    public void playerSetup(String positions, String alignment) { // This is where the player will set up their ships on the grid
 
+    public void playerSetup(String positions, String alignment, String shipType) { // This is where the player will set up their ships on the grid
+        // TODO: Start by checking if the ship can be placed in that position (no colisions or leaving board)
+        // TODO: Place ship
+        if()
     }
 
     // check if the board has had all ships removed
