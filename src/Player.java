@@ -37,20 +37,20 @@ public class Player {
         System.out.println("\n");
         for (int z = 0; z < players; z++) {
             int row = 0;
-            System.out.print("X\u2551"); // Prints the X in the top left corner
+            System.out.print("X|"); // Prints the X in the top left corner
             for (int x = 0; x < gridSize; x++) {
                 System.out.print(row + " "); // Prints the column numbers above the grid
                 row++; // Increments the column number
             }
             System.out.println();
-            System.out.print("\u2550\u256C"); // Just to make it look nicer
+            System.out.print("-+"); // Just to make it look nicer
             for (int x = 0; x < (gridSize * 2) - 1; x++) {
-                System.out.print("\u2550"); // Prints divider between row numbers and grid
+                System.out.print("-"); // Prints divider between row numbers and grid
             }
 
             for (int y = 0; y < gridSize; y++) {
                 System.out.println(); // Prints to next line
-                System.out.print(Character + "\u2551"); // Prints the row numbers to the left of the grid
+                System.out.print(Character + "|"); // Prints the row numbers to the left of the grid
                 Character++; // Increments the row number
                 for (int x = 0; x < gridSize; x++) {
                     System.out.print(grids[x][y][z] + " "); // Prints the cell in the grid
