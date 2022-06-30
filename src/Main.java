@@ -16,7 +16,7 @@ public class Main {
 
     final static int GRIDSIZE = 10; // Size of grid, do not set above 10, you will break the program due to how position input is taken.
 
-    public static int whichPlayer = 1;
+    public static int whichPlayer = 0; // Which player is currently playing, starts at 0 because it is the first player to play.
     public static Boolean gameRunning = true; // 
     
     public static String alignment; // Where the alignment will be saved temporarily. Will only be used to set up the ships.
@@ -26,7 +26,7 @@ public class Main {
 
         if (args.length != 0) {
             System.out.println("Arguments are not needed to run the game");
-            System.exit(2);
+            System.exit(2); // We don't need arguments for the game to run
         }
 
         // load the Player class into as many objects as PLAYERCOUNT is
@@ -43,12 +43,12 @@ public class Main {
         }
 
         while (gameRunning) { // Because I want the game to end when player board is empty, not after all player have had their turn and a board is empty
-            if(whichPlayer < PLAYERCOUNT) {
+            if(whichPlayer < PLAYERCOUNT) { // If the player is not at/above the player count
 
-                whichPlayer++;
+                whichPlayer++; // Increments which player is currently playing
             }
             else {
-                whichPlayer = 0;
+                whichPlayer = 0; // Resets which player is currently playing
             }
         }
 
