@@ -60,20 +60,10 @@ public class Player {
         }
     }
 
-    public boolean positionLengthCheck(String positions) {
-        // check to made sure positions entered is valid, if not, print and error and return false
-        if (positions.length() != 2) {
-            System.out.println("Invalid positions entered");
-            System.out.println("Issue: Position entered is too long.\n ");
-            return(false); // Return false if the positions are too long or short
-        }
-        else {return(true);} // If the positions are valid, return true
-    }
-
     public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
         // convert positions to two separate variables
 
-            // check to make sure ship position doesn't go off the board
+        // check to make sure ship position doesn't go off the board
         if (positions.charAt(0) > gridSize || positions.charAt(1) > gridSize) {
             System.out.println("Invalid positions entered");
         }
