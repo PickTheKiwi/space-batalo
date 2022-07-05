@@ -9,8 +9,8 @@ Precompiled jar file
 ### BlueJ
 1. Open src folder in BlueJ
 
-### InteleJ
-1. Open main folder in IntelleJ
+### IntelliJ
+1. Open main folder in IntelliJ
 
 ### Other
-Look it up, I don't know so I can't tell you
+Look it up, I don't know, so I can't tell you
