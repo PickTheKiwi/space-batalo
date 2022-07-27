@@ -41,13 +41,19 @@ public class Main {
             players[x].viewBoard(); // View the board before game start - This is will be removed in the future
         }
 
+        Boolean inSetup = true; // Boolean to check if the game is in setup mode or not
         String position = ""; // Where the position will be saved temporarily
-        while (position.length() != 2) {
-            System.out.print("Where do you wish to place the ship? (e.g. A2) - "); // Ask the user where they wish to place the ship
-            position = keyboard.nextLine(); // Take input for string1
-            if (position.length() != 2) {
-                System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position"); // If the input is not valid, tell the user to try again
+        String alignment = ""; // Where the alignment will be saved temporarily
+        int shipSize = 0; // Where the ship size will be saved temporarily
+
+        for (int x = 3;x<x;x++) {
+            while (inSetup) { // While the position is not valid
+                System.out.print("Where do you wish to place the ship? (e.g. A2) - "); // Ask the user where they wish to place the ship
+                position = keyboard.nextLine(); // Take input for string1
+                inSetup = !validPosInput(position); // Check if the position is valid
             }
+
+
         }
 
         // Clear the screen
@@ -66,4 +72,32 @@ public class Main {
         }
         System.out.print("Game over"); // Tell the player the game is over, this wil be updated to be better later.
     }
+
+    public static boolean validPosInput(String positions) { // Checks if the position is valid
+        if (positions.length() != 2) {
+            System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position\nIssue: You must only input two characters"); // If the input is not valid, tell the user to try again
+            return false;
+        }
+        if (Character.isDigit(positions.charAt(0)) && !Character.isDigit(positions.charAt(1))) {
+            if((positions.charAt(1) <= 'a' && positions.charAt(1) >= 'j') || (positions.charAt(1) <= 'A' && positions.charAt(1) >= 'J')) {
+                return true;
+            }
+        }
+        if (Character.isDigit(positions.charAt(1)) && !Character.isDigit(positions.charAt(0))){
+            if((positions.charAt(0) <= 'a' && positions.charAt(1) >= 'j') || (positions.charAt(1) <= 'A' && positions.charAt(0) >= 'J')) {
+                return true;
+            }
+        }
+
+        System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position\nissue: You must enter one letter (from a-j) and one number (0-9)"); // If the input is not valid, tell the user to try again
+        return false;
+    }
+
+    public static boolean validPosPlacement(String positions, String alignment, int shipsize) {
+        return false;
+    }
+
+//    String xPos = positions.replaceAll("[^0-9]", ""); // Remove all non-numeric characters from the string
+//    String yPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
+
 }

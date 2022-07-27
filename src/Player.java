@@ -11,7 +11,7 @@ public class Player {
     public int players; // Amount of players
     public boolean isBot; // For checks if a bot should play when this is called
     public int gridSize; // Where grid size will be saved
-    private int[][][] grids;
+    private int[][][] grids; // Where the grids will be saved.
 
 
     public Player(Boolean isHuman, int playerCount, int sizeOfGrid) {
@@ -19,7 +19,7 @@ public class Player {
         isBot = !isHuman;
         gridSize = sizeOfGrid;
 
-        grids = new int[gridSize][gridSize][players];
+        grids = new int[gridSize][gridSize][players]; // Create a new grid for each player (and set sizes)
 
         // Set each cell in the grid to 0
         for (int z = 0; z < players; z++) {
@@ -59,7 +59,6 @@ public class Player {
             System.out.println("\n"); // Creates a gap between the boards
         }
     }
-
     public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
         // convert positions to two separate variables
 
