@@ -59,13 +59,15 @@ public class Player {
             System.out.println("\n"); // Creates a gap between the boards
         }
     }
-    public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
-        // convert positions to two separate variables
 
-        // check to make sure ship position doesn't go off the board
-        if (positions.charAt(0) > gridSize || positions.charAt(1) > gridSize) {
-            System.out.println("Invalid positions entered");
-        }
+    public boolean checkPlaceable() { // This is a check to see if the ship can be placed without overlaps
+
+        return true;
+    }
+    public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
+        String xPos = positions.replaceAll("[^0-9]", ""); // Remove all non-numeric characters from the string
+        String yPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
+
     }
 
     // check if the board has had all ships removed
@@ -74,8 +76,8 @@ public class Player {
         // loop for each cell (with the x, y, and x loops)
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
-                if (grids[x][y][playerNumber] == 0 || grids[x][y][playerNumber] == 9) { // checks if cell is empty or hit
-                        count++; //
+                if (grids[x][y][playerNumber] == 0 || grids[x][y][playerNumber] == 9) {
+                        count++; // if cell is empty or hit, increment count
                 }
             }
         }
