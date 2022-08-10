@@ -39,16 +39,22 @@ public class Main {
             players[x].viewBoard(); // View the board before game start - This is will be removed in the future
         }
 
-        boolean inSetup = true; // Boolean to check if the game is in setup mode or not
         String position; // Where the position will be saved temporarily
         String alignment; // Where the alignment will be saved temporarily
         int shipSize = 0; // Where the ship size will be saved temporarily
 
         for (int x=2;x<5;x++) {
-            while (inSetup) { // While the position is not valid
+            boolean validPos = false; // Boolean to check if the game is in PosInput mode or not
+            while (!validPos) { // While the position is not valid
                 System.out.print("Where do you wish to place the ship? (e.g. A2) - "); // Ask the user where they wish to place the ship
                 position = keyboard.nextLine(); // Take input for string1
-                inSetup = !validPosInput(position); // Check if the position is valid
+                validPos = validPosInput(position); // Check if the position is valid
+            }
+            boolean validAlignment = false; // Boolean to check if the game is in Alignment Input mode or not
+            while(!validAlignment) {
+                System.out.print("Where do you wish to place the ship? (e.g. A2) - "); // Ask the user where they wish to place the ship
+                position = keyboard.nextLine(); // Take input for string1
+                validAlignment = !validPosInput(position); // Check if the position is valid
             }
 
 
@@ -74,7 +80,7 @@ public class Main {
 
     public static boolean validPosInput(String positions) { // Checks if the position is valid
         if (positions.length() != 2) {
-            System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position\nIssue: You must only input two characters"); // If the input is not valid, tell the user to try again
+            System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position.\nYou must only input two characters"); // If the input is not valid, tell the user to try again
             return false;
         }
         if (Character.isDigit(positions.charAt(0)) && !Character.isDigit(positions.charAt(1))) { // if first character is a digit, and the second character is not
@@ -88,11 +94,18 @@ public class Main {
             }
         }
 
-        System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position\nissue: You must enter one letter (from a-j) and one number (0-9)"); // If the input is not valid, tell the user to try again
+        System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position\nYou must enter one letter (from a-j) and one number (0-9)"); // If the input is not valid, tell the user to try again
         return false;
     }
+    public static boolean validAlignInput(String alignment) { // Checks if the position is valid
+        if(alignment.equals("H")||alignment.equals("V")) {
+            System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position.\nValid input is 'V' or 'H'");
+        }
+        return (alignment.equals("H")||alignment.equals("V"));
+    }
 
-    public static boolean validPosPlacement(String positions, String alignment, int shipsize) {
+    public static boolean validPosPlacement(String positions, String alignment, int shipSize) {
+        for(int x=0;x<shipSize;x++ )
         return false;
     }
 }

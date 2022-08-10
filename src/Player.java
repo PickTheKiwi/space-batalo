@@ -60,12 +60,12 @@ public class Player {
         }
     }
 
-    public boolean checkPlaceable() { // This is a check to see if the ship can be placed without overlaps
+    public static boolean checkPlaceable() { // This is a check to see if the ship can be placed without overlaps
 
         return true;
     }
     public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
-        String xPos = positions.replaceAll("[^0-9]", ""); // Remove all non-numeric characters from the string
+        String xPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
         String yPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
 
     }
@@ -77,7 +77,7 @@ public class Player {
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
                 if (grids[x][y][playerNumber] == 0 || grids[x][y][playerNumber] == 9) {
-                        count++; // if cell is empty or hit, increment count
+                        count++; // if cell is empty (0) or hit (9), increment count
                 }
             }
         }
