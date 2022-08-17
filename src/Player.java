@@ -12,12 +12,18 @@ public class Player {
     public boolean isBot; // For checks if a bot should play when this is called
     public int gridSize; // Where grid size will be saved
     private int[][][] grids; // Where the grids will be saved.
+    public int yPos;
+    public int xPos;
+
+    private int playerNumber;
 
 
-    public Player(Boolean isHuman, int playerCount, int sizeOfGrid) {
+    public Player(Boolean isHuman, int playerCount, int sizeOfGrid, int playerno) {
         players = playerCount;
         isBot = !isHuman;
         gridSize = sizeOfGrid;
+
+        playerNumber = playerno;
 
         grids = new int[gridSize][gridSize][players]; // Create a new grid for each player (and set sizes)
 
@@ -60,10 +66,6 @@ public class Player {
         }
     }
 
-    public static boolean checkPlaceable() { // This is a check to see if the ship can be placed without overlaps
-
-        return true;
-    }
     public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
         String xPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
         String yPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.

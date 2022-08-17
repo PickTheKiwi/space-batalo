@@ -103,9 +103,4 @@ public class Main {
         }
         return (alignment.equals("H")||alignment.equals("V"));
     }
-
-    public static boolean validPosPlacement(String positions, String alignment, int shipSize) {
-        for(int x=0;x<shipSize;x++ )
-        return false;
-    }
 }
