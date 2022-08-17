@@ -29,11 +29,11 @@ public class Main {
         // load the Player class into as many objects as PLAYERCOUNT is
         Player[] players = new Player[PLAYERCOUNT];
         for (int x = 0; x < HUMANCOUNT; x++) { // For as many players as there are
-            players[x] = new Player(true, PLAYERCOUNT, GRIDSIZE); // Create a new player
+            players[x] = new Player(true, PLAYERCOUNT, GRIDSIZE, x); // Create a new player
 
         }
         for (int x = HUMANCOUNT; x < PLAYERCOUNT; x++) { // For as many players as there are
-            players[x] = new Player(false, PLAYERCOUNT, GRIDSIZE); // Create a new player
+            players[x] = new Player(false, PLAYERCOUNT, GRIDSIZE, x); // Create a new player
         }
         for (int x = 0; x < PLAYERCOUNT; x++) { // For as many players as there are
             players[x].viewBoard(); // View the board before game start - This is will be removed in the future
