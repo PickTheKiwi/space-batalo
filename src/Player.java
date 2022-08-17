@@ -86,4 +86,36 @@ public class Player {
         // if each cell is either empty or hit. return true, otherwise return false
         return count == (gridSize * gridSize); // Initially an if statement, but I realised it could be simplified
     }
+
+    public boolean checkPlaceable(String positions, String alignment, int shipSize) {
+        String tempXPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
+        // Convert number in string to actual number
+        int xPos = Integer.parseInt(tempXPos);
+        String tempYPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
+        if(!Character.isUpperCase(tempYPos.charAt(0))) { // If character is not uppercase
+            yPos = tempYPos.charAt(0) - 97; // Change lowercase letter to number and assign to yPos
+        }
+        if (Character.isUpperCase(tempYPos.charAt(0))){ // If character is uppercase
+            yPos = tempYPos.charAt(0) - 65; // Change uppercase letter to number and assign to yPos
+        }
+        if(alignment == "h") { // if player horizontal alignment
+            for(int x=shipSize; x<shipSize+xPos; x++) { // loop for shipSize through xPos
+                if(grids[x][yPos][playerNumber]!=0) { // if there is an overlap
+                    System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
+                    viewBoard(); // View the board
+                    return false; // return
+                }
+            }
+        }
+        if(alignment == "v") { // Ff player chose vertical alignment
+            for(int y=shipSize; y<shipSize+yPos; y++) { // loop for shipSize through yPos
+                if(grids[xPos][y][playerNumber]!=0) { // if there is an overlap
+                    System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
+                    viewBoard(); // View the board
+                    return false; // return
+                }
+            }
+        }
+        return true; //
+    }
 }
