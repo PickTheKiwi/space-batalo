@@ -84,7 +84,7 @@ public class Player {
     public boolean checkPlaceable(String positions, String alignment, int shipSize) {
         String tempXPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
         // Convert number in string to actual number
-        int xPos = Integer.parseInt(tempXPos);
+        xPos = Integer.parseInt(tempXPos);
         String tempYPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
         if(!Character.isUpperCase(tempYPos.charAt(0))) { // If character is not uppercase
             yPos = tempYPos.charAt(0) - 97; // Change lowercase letter to number and assign to yPos
@@ -110,6 +110,34 @@ public class Player {
                 }
             }
         }
-        return true; //
+        return true; // If there are no overlaps then return true
+    }
+
+    public void placeShips(String positions, String alignment, int shipSize, int shipType) {
+        if(!isBot) {
+            String tempXPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
+            // Convert number in string to actual number
+            xPos = Integer.parseInt(tempXPos);
+            String tempYPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
+            if (!Character.isUpperCase(tempYPos.charAt(0))) { // If character is not uppercase
+                yPos = tempYPos.charAt(0) - 97; // Change lowercase letter to number and assign to yPos
+            }
+            if (Character.isUpperCase(tempYPos.charAt(0))) { // If character is uppercase
+                yPos = tempYPos.charAt(0) - 65; // Change uppercase letter to number and assign to yPos
+            }
+            if (alignment.equals("h")) { // if player horizontal alignment
+                for (int x = shipSize; x < shipSize + xPos; x++) { // loop for shipSize through xPos
+                    grids[x][yPos][playerNumber] = shipSize * shipType; // set cell to ship type
+                    // * shipType because there are two ships of size three.
+                    // I put it like this because the max size ship size is 5, and 2*3 is 6, just out of range of the largest ship on the board
+                    // This is limiting in some ways however I'm not writing my code to work in those ways, so I really don't care
+                }
+            }
+            if (alignment.equals("v")) { // If alignment is vertical use the same loop but in a vertical direction
+                for (int y = shipSize; y < shipSize + yPos; y++) {
+                    grids[xPos][y][playerNumber] = shipSize * shipType;
+                }
+            }
+        }
     }
 }
