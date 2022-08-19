@@ -15,7 +15,7 @@ public class Player {
     public int yPos;
     public int xPos;
 
-    private int playerNumber;
+    private final int playerNumber;
 
 
     public Player(Boolean isHuman, int playerCount, int sizeOfGrid, int playerno) {
@@ -66,12 +66,6 @@ public class Player {
         }
     }
 
-    public void playerSetup(String positions, String alignment, int shipSize) { // This is where the player will set up their ships on the grid
-        String xPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
-        String yPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
-
-    }
-
     // check if the board has had all ships removed
     public boolean isGameOver(int playerNumber) {
         int count = 0;
@@ -98,7 +92,7 @@ public class Player {
         if (Character.isUpperCase(tempYPos.charAt(0))){ // If character is uppercase
             yPos = tempYPos.charAt(0) - 65; // Change uppercase letter to number and assign to yPos
         }
-        if(alignment == "h") { // if player horizontal alignment
+        if(alignment.equals("h")) { // if player horizontal alignment
             for(int x=shipSize; x<shipSize+xPos; x++) { // loop for shipSize through xPos
                 if(grids[x][yPos][playerNumber]!=0) { // if there is an overlap
                     System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
@@ -107,7 +101,7 @@ public class Player {
                 }
             }
         }
-        if(alignment == "v") { // Ff player chose vertical alignment
+        if(alignment.equals("v")) { // Ff player chose vertical alignment
             for(int y=shipSize; y<shipSize+yPos; y++) { // loop for shipSize through yPos
                 if(grids[xPos][y][playerNumber]!=0) { // if there is an overlap
                     System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
