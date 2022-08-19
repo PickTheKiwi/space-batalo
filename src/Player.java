@@ -127,8 +127,8 @@ public class Player {
             }
             if (alignment.equals("h")) { // if player horizontal alignment
                 for (int x = shipSize; x < shipSize + xPos; x++) { // loop for shipSize through xPos
-                    grids[x][yPos][playerNumber] = shipSize * shipType; // set cell to ship type
-                    // * shipType because there are two ships of size three.
+                    grids[x][yPos][playerNumber] = shipSize * shipType; // set cell number to ship type
+                    // "* shipType" because there are two ships of size three.
                     // I put it like this because the max size ship size is 5, and 2*3 is 6, just out of range of the largest ship on the board
                     // This is limiting in some ways however I'm not writing my code to work in those ways, so I really don't care
                 }

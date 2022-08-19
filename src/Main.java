@@ -41,7 +41,7 @@ public class Main {
 
         String position; // Where the position will be saved temporarily
         String alignment; // Where the alignment will be saved temporarily
-        int shipSize = 0; // Where the ship size will be saved temporarily
+        int shipSize; // Where the ship size will be saved temporarily
 
         for (int x=2;x<5;x++) {
             boolean validPos = false; // Boolean to check if the game is in PosInput mode or not
@@ -56,16 +56,13 @@ public class Main {
                 position = keyboard.nextLine(); // Take input for string1
                 validAlignment = !validPosInput(position); // Check if the position is valid
             }
-
-
-
         }
 
         // Clear the screen
         System.out.print("\033[H\033[2J");
         System.out.print("Test output"); // Test output, will be removed
 
-        Boolean gameRunning = true; // Boolean to check if the game is running, true by default.
+        boolean gameRunning = true; // Boolean to check if the game is running, true by default.
 
         while (gameRunning) { // Because I want the game to end when player board is empty, not after all player have had their turn and a board is empty
             if(whichPlayer < PLAYERCOUNT) { // If the player is not at/above the player count
