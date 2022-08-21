@@ -52,9 +52,9 @@ public class Main {
             }
             boolean validAlignment = false; // Boolean to check if the game is in Alignment Input mode or not
             while(!validAlignment) {
-                System.out.print("Where do you wish to place the ship? (e.g. A2) - "); // Ask the user where they wish to place the ship
+                System.out.print("What alignment do you wish for your ship to be placed in?\nH for Horizontal for V for Vertical - "); // Ask the user where they wish to place the ship
                 position = keyboard.nextLine(); // Take input for string1
-                validAlignment = !validPosInput(position); // Check if the position is valid
+                validAlignment = validPosInput(position); // Check if the position is valid
             }
         }
 
@@ -86,7 +86,7 @@ public class Main {
             }
         }
         if (Character.isDigit(positions.charAt(1)) && !Character.isDigit(positions.charAt(0))){
-            if((positions.charAt(0) <= 'a' && positions.charAt(1) >= 'j') || (positions.charAt(1) <= 'A' && positions.charAt(0) >= 'J')) {
+            if((positions.charAt(0) <= 'a' && positions.charAt(0) >= 'j') || (positions.charAt(0) <= 'A' && positions.charAt(0) >= 'J')) {
                 return true;
             }
         }
@@ -95,9 +95,9 @@ public class Main {
         return false;
     }
     public static boolean validAlignInput(String alignment) { // Checks if the position is valid
-        if(alignment.equals("H")||alignment.equals("V")) {
+        if(alignment.equals("H")||alignment.equals("V")||alignment.equals("h")||alignment.equals("v")) {
             System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position.\nValid input is 'V' or 'H'");
         }
-        return (alignment.equals("H")||alignment.equals("V"));
+        return (alignment.equals("H")||alignment.equals("V")||alignment.equals("h")||alignment.equals("v"));
     }
 }
