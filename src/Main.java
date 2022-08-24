@@ -18,8 +18,12 @@ public class Main {
 
     public static int whichPlayer = 0; // Which player is currently playing, starts at 0 because it is the first player to play.
 
+    public static String position; // Where the position will be saved temporarily
+    public static String alignment; // Where the alignment will be saved temporarily
+
+    public static Player[] players;
     public static void main(String[] args) {
-        Scanner keyboard=new Scanner(System.in); // Creates a scanner to take input from the user
+
 
         if (args.length != 0) {
             System.out.println("\nArguments are not needed to run the game.\nPlease run the game without any arguments to play.\n");
@@ -27,7 +31,7 @@ public class Main {
         }
 
         // load the Player class into as many objects as PLAYERCOUNT is
-        Player[] players = new Player[PLAYERCOUNT];
+        players = new Player[PLAYERCOUNT];
         for (int x = 0; x < HUMANCOUNT; x++) { // For as many players as there are
             players[x] = new Player(true, PLAYERCOUNT, GRIDSIZE, x); // Create a new player
 
@@ -95,7 +99,7 @@ public class Main {
         return false;
     }
     public static boolean validAlignInput(String alignment) { // Checks if the position is valid
-        if(alignment.equals("H")||alignment.equals("V")||alignment.equals("h")||alignment.equals("v")) {
+        if(!alignment.equals("H")&&!alignment.equals("V")&&!alignment.equals("h")&&!alignment.equals("v")) {
             System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position.\nValid input is 'V' or 'H'");
         }
         return (alignment.equals("H")||alignment.equals("V")||alignment.equals("h")||alignment.equals("v"));

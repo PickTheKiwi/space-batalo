@@ -81,7 +81,7 @@ public class Player {
         return count == (gridSize * gridSize); // Initially an if statement, but I realised it could be simplified
     }
 
-    public boolean checkPlaceable(String positions, String alignment, int shipSize) {
+    public boolean checkPlaceable(String positions, String alignment, int shipSize, int shipType) {
         String tempXPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
         // Convert number in string to actual number
         xPos = Integer.parseInt(tempXPos);
