@@ -43,28 +43,36 @@ public class Main {
             players[x].viewBoard(); // View the board before game start - This is will be removed in the future
         }
 
-        String position; // Where the position will be saved temporarily
-        String alignment; // Where the alignment will be saved temporarily
-        int shipSize; // Where the ship size will be saved temporarily
-
-        for (int x=2;x<5;x++) {
-            boolean validPos = false; // Boolean to check if the game is in PosInput mode or not
-            while (!validPos) { // While the position is not valid
-                System.out.print("Where do you wish to place the ship? (e.g. A2) - "); // Ask the user where they wish to place the ship
-                position = keyboard.nextLine(); // Take input for string1
-                validPos = validPosInput(position); // Check if the position is valid
+        for (int c=0;c<HUMANCOUNT;c++) {
+            for (int x = 3; x < 6; x++) { // Ask for input, check, then place the ships
+                position = askPosInput(); // Ask for input for positions
+                while (!checkPosInput(position)){ // This will only loop if the previous input is invalid
+                    position = askPosInput();
+                }
+                alignment = askAlignInput(); // Ask for input for alignment
+                while (!checkAlignInput(alignment, x, 1)){ // This will only loop if the previous input is invalid
+                    alignment = askAlignInput();
+                }
+                players[c].checkPlaceable(position, alignment, x, 1);
+                players[c].placeShips(position, alignment, x, 1);
+                players[c].viewBoard();
             }
-            boolean validAlignment = false; // Boolean to check if the game is in Alignment Input mode or not
-            while(!validAlignment) {
-                System.out.print("What alignment do you wish for your ship to be placed in?\nH for Horizontal for V for Vertical - "); // Ask the user where they wish to place the ship
-                position = keyboard.nextLine(); // Take input for string1
-                validAlignment = validPosInput(position); // Check if the position is valid
+            // repeat the last loop one for time for the second size 3 ship
+            position = askPosInput(); // Ask for input for positions
+            while (!checkPosInput(position)){ // This will only loop if the previous input is invalid
+                position = askPosInput();
             }
+            alignment = askAlignInput(); // Ask for input for alignment
+            while (!checkAlignInput(alignment, 3, 1)){ // This will only loop if the previous input is invalid
+                alignment = askAlignInput();
+            }
+            players[c].checkPlaceable(position, alignment, 3, 2);
+            players[c].placeShips(position, alignment, 3, 2);
+            players[c].viewBoard();
         }
 
         // Clear the screen
         System.out.print("\033[H\033[2J");
-        System.out.print("Test output"); // Test output, will be removed
 
         boolean gameRunning = true; // Boolean to check if the game is running, true by default.
 
@@ -79,18 +87,29 @@ public class Main {
         System.out.print("Game over"); // Tell the player the game is over, this wil be updated to be better later.
     }
 
-    public static boolean validPosInput(String positions) { // Checks if the position is valid
+    public static String askPosInput() {
+        Scanner keyboard=new Scanner(System.in); // Creates a scanner to take input from the user
+        System.out.print("Where do you wish to place the ship? (e.g. A2) - "); // Ask the user where they wish to place the ship
+        return keyboard.nextLine(); // Take input for string1
+    }
+    public static String askAlignInput() {
+        Scanner keyboard=new Scanner(System.in); // Creates a scanner to take input from the user
+        System.out.print("What alignment do you wish for your ship to be placed in?\nH for Horizontal for V for Vertical - "); // Ask the user where they wish to place the ship
+        return keyboard.nextLine(); // Take input for string
+    }
+
+    public static boolean checkPosInput(String positions) { // Checks if the position is valid
         if (positions.length() != 2) {
             System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position.\nYou must only input two characters"); // If the input is not valid, tell the user to try again
             return false;
         }
         if (Character.isDigit(positions.charAt(0)) && !Character.isDigit(positions.charAt(1))) { // if first character is a digit, and the second character is not
-            if((positions.charAt(1) <= 'a' && positions.charAt(1) >= 'j') || (positions.charAt(1) <= 'A' && positions.charAt(1) >= 'J')) {
+            if((positions.charAt(1) >= 'a' && positions.charAt(1) <= 'j') || (positions.charAt(1) >= 'A' && positions.charAt(1) <= 'J')) {
                 return true;
             }
         }
         if (Character.isDigit(positions.charAt(1)) && !Character.isDigit(positions.charAt(0))){
-            if((positions.charAt(0) <= 'a' && positions.charAt(0) >= 'j') || (positions.charAt(0) <= 'A' && positions.charAt(0) >= 'J')) {
+            if((positions.charAt(0) >= 'a' && positions.charAt(0) <= 'j') || (positions.charAt(0) >= 'A' && positions.charAt(0) <= 'J')) {
                 return true;
             }
         }
@@ -98,7 +117,7 @@ public class Main {
         System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position\nYou must enter one letter (from a-j) and one number (0-9)"); // If the input is not valid, tell the user to try again
         return false;
     }
-    public static boolean validAlignInput(String alignment) { // Checks if the position is valid
+    public static boolean checkAlignInput(String alignment, int shipSize, int shipType) { // Checks if the position is valid
         if(!alignment.equals("H")&&!alignment.equals("V")&&!alignment.equals("h")&&!alignment.equals("v")) {
             System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position.\nValid input is 'V' or 'H'");
         }

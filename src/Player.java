@@ -93,7 +93,7 @@ public class Player {
             yPos = tempYPos.charAt(0) - 65; // Change uppercase letter to number and assign to yPos
         }
         if(alignment.equals("h")) { // if player horizontal alignment
-            for(int x=shipSize; x<shipSize+xPos; x++) { // loop for shipSize through xPos
+            for(int x=xPos; x<shipSize+xPos; x++) { // loop for shipSize through xPos
                 if(grids[x][yPos][playerNumber]!=0) { // if there is an overlap
                     System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
                     viewBoard(); // View the board
@@ -102,7 +102,7 @@ public class Player {
             }
         }
         if(alignment.equals("v")) { // Ff player chose vertical alignment
-            for(int y=shipSize; y<shipSize+yPos; y++) { // loop for shipSize through yPos
+            for(int y=yPos; y<shipSize+yPos; y++) { // loop for shipSize through yPos
                 if(grids[xPos][y][playerNumber]!=0) { // if there is an overlap
                     System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
                     viewBoard(); // View the board
@@ -117,7 +117,7 @@ public class Player {
         if(!isBot) {
             String tempXPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
             // Convert number in string to actual number
-            xPos = Integer.parseInt(tempXPos);
+            xPos = Integer.parseInt(tempXPos); // Change character into number
             String tempYPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
             if (!Character.isUpperCase(tempYPos.charAt(0))) { // If character is not uppercase
                 yPos = tempYPos.charAt(0) - 97; // Change lowercase letter to number and assign to yPos
@@ -126,7 +126,7 @@ public class Player {
                 yPos = tempYPos.charAt(0) - 65; // Change uppercase letter to number and assign to yPos
             }
             if (alignment.equals("h")) { // if player horizontal alignment
-                for (int x = shipSize; x < shipSize + xPos; x++) { // loop for shipSize through xPos
+                for (int x = xPos; x < shipSize + xPos; x++) { // loop for shipSize through xPos
                     grids[x][yPos][playerNumber] = shipSize * shipType; // set cell number to ship type
                     // "* shipType" because there are two ships of size three.
                     // I put it like this because the max size ship size is 5, and 2*3 is 6, just out of range of the largest ship on the board
@@ -134,7 +134,7 @@ public class Player {
                 }
             }
             if (alignment.equals("v")) { // If alignment is vertical use the same loop but in a vertical direction
-                for (int y = shipSize; y < shipSize + yPos; y++) {
+                for (int y = yPos; y < shipSize + yPos; y++) {
                     grids[xPos][y][playerNumber] = shipSize * shipType;
                 }
             }
