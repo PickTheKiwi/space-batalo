@@ -6,6 +6,7 @@
  * @author Seb White
  * @version 1
  */
+import java.util.Random;
 
 public class Player {
     public int players; // Amount of players
@@ -139,5 +140,32 @@ public class Player {
                 }
             }
         }
+    }
+
+    public void botShipSetup(int shipType, int shipSize) {
+        Random rand = new Random(); // Create random object
+        yPos = rand.nextInt(10); // easier than Math.random, generates a random number between 0 and 9
+        xPos = rand.nextInt(10);
+        int alignGen = rand.nextInt(2); // Generate a random number between 0 and 1
+        String alignment; // Create string to hold alignment
+        if (alignGen == 0){ // if number is 0
+            alignment = "h";
+        } else { // if number is 1
+            alignment = "v";
+        }
+        // Convert yPos and xPos to string
+        String yPosString = Character.toString((char) (yPos + 97));
+        String xPosString = Integer.toString(xPos);
+        // Connect the two strings together to form a two character string
+        String positions = xPosString + yPosString;
+
+        // Check if the ship can be placed
+        if(checkPlaceable(positions, alignment, shipSize, shipType)) {
+            // Place the ship
+            placeShips(positions, alignment, shipSize, shipType);
+        } else { // If the ship can't be placed, call the method again
+            botShipSetup(shipType, shipSize);
+        }
+        viewBoard(); // View the board
     }
 }

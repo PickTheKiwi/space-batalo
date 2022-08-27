@@ -70,6 +70,12 @@ public class Main {
             players[c].placeShips(position, alignment, 3, 2);
             players[c].viewBoard();
         }
+        for (int c=HUMANCOUNT;c<PLAYERCOUNT;c++) {
+            for (int x = 3; x < 6; x++) { // Ask for input, check, then place the ships
+                players[c].botShipSetup(x, 1);
+            }
+            players[c].botShipSetup(3, 2);
+        }
 
         // Clear the screen
         System.out.print("\033[H\033[2J");
