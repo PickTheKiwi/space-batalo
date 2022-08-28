@@ -44,7 +44,7 @@ public class Main {
         }
 
         for (int c=0;c<HUMANCOUNT;c++) {
-            for (int x = 3; x < 6; x++) { // Ask for input, check, then place the ships
+            for (int x = 2; x < 6; x++) { // Ask for input, check, then place the ships
                 position = askPosInput(); // Ask for input for positions
                 while (!checkPosInput(position)){ // This will only loop if the previous input is invalid
                     position = askPosInput();
@@ -53,7 +53,7 @@ public class Main {
                 while (!checkAlignInput(alignment, x, 1)){ // This will only loop if the previous input is invalid
                     alignment = askAlignInput();
                 }
-                players[c].checkPlaceable(position, alignment, x, 1);
+                players[c].checkPlaceable(position, alignment, x);
                 players[c].placeShips(position, alignment, x, 1);
                 players[c].viewBoard();
             }
@@ -66,15 +66,16 @@ public class Main {
             while (!checkAlignInput(alignment, 3, 1)){ // This will only loop if the previous input is invalid
                 alignment = askAlignInput();
             }
-            players[c].checkPlaceable(position, alignment, 3, 2);
+            players[c].checkPlaceable(position, alignment, 3);
             players[c].placeShips(position, alignment, 3, 2);
             players[c].viewBoard();
         }
+
         for (int c=HUMANCOUNT;c<PLAYERCOUNT;c++) {
-            for (int x = 3; x < 6; x++) { // Ask for input, check, then place the ships
-                players[c].botShipSetup(x, 1);
+            for (int x = 2; x < 6; x++) { // Ask for input, check, then place the ships
+                players[c].botShipSetup(1, x);
             }
-            players[c].botShipSetup(3, 2);
+            players[c].botShipSetup(2, 3);
         }
 
         // Clear the screen

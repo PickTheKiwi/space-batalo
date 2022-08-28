@@ -43,11 +43,11 @@ public class Player {
         char Character = '\u0041';
         System.out.println("\n");
         for (int z = 0; z < players; z++) {
-            int row = 0;
+            int column = 0;
             System.out.print("X|"); // Prints the X in the top left corner
             for (int x = 0; x < gridSize; x++) {
-                System.out.print(row + " "); // Prints the column numbers above the grid
-                row++; // Increments the column number
+                System.out.print(column + " "); // Prints the column numbers above the grid
+                column++; // Increments the column number
             }
             System.out.println();
             System.out.print("-+"); // Just to make it look nicer
@@ -82,7 +82,7 @@ public class Player {
         return count == (gridSize * gridSize); // Initially an if statement, but I realised it could be simplified
     }
 
-    public boolean checkPlaceable(String positions, String alignment, int shipSize, int shipType) {
+    public boolean checkPlaceable(String positions, String alignment, int shipSize) {
         String tempXPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
         // Convert number in string to actual number
         xPos = Integer.parseInt(tempXPos);
@@ -144,28 +144,33 @@ public class Player {
 
     public void botShipSetup(int shipType, int shipSize) {
         Random rand = new Random(); // Create random object
-        yPos = rand.nextInt(10); // easier than Math.random, generates a random number between 0 and 9
-        xPos = rand.nextInt(10);
-        int alignGen = rand.nextInt(2); // Generate a random number between 0 and 1
-        String alignment; // Create string to hold alignment
-        if (alignGen == 0){ // if number is 0
-            alignment = "h";
-        } else { // if number is 1
-            alignment = "v";
-        }
-        // Convert yPos and xPos to string
-        String yPosString = Character.toString((char) (yPos + 97));
-        String xPosString = Integer.toString(xPos);
-        // Connect the two strings together to form a two character string
-        String positions = xPosString + yPosString;
+        boolean placed = false; // Boolean to check if ship has been placed
+        while(!placed) {
+            yPos = rand.nextInt(10); // easier than Math.random, generates a random number between 0 and 9
+            xPos = rand.nextInt(10);
+            int alignGen = rand.nextInt(2); // Generate a random number between 0 and 1
+            String alignment; // Create string to hold alignment
+            if (alignGen == 0) { // if number is 0
+                alignment = "h";
+                xPos = rand.nextInt(11 - shipSize); // Generate a random number between 0 and 10-shipSize
+                // My logic is if the ship size is 3 it would 9-3 then it would be 0-6.
+                // So if it generates the max number (6) the ship would only reach 8, instead of 9 (the edge of the board)
+            } else { // if number is 1
+                alignment = "v";
+                yPos = rand.nextInt(11 - shipSize);
+            }
+            // Convert yPos and xPos to string
+            String yPosString = Character.toString((char) (yPos + 97));
+            String xPosString = Integer.toString(xPos);
+            // Connect the two strings together to form a two character string
+            String positions = xPosString + yPosString;
 
-        // Check if the ship can be placed
-        if(checkPlaceable(positions, alignment, shipSize, shipType)) {
-            // Place the ship
-            placeShips(positions, alignment, shipSize, shipType);
-        } else { // If the ship can't be placed, call the method again
-            botShipSetup(shipType, shipSize);
+            // Check if the ship can be placed
+            if (checkPlaceable(positions, alignment, shipSize)) {
+                placeShips(positions, alignment, shipSize, shipType); // Place the ship
+                placed = true; // Set boolean to true
+            }
+            viewBoard(); // View the board
         }
-        viewBoard(); // View the board
     }
 }
