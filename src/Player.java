@@ -148,29 +148,55 @@ public class Player {
         while(!placed) {
             yPos = rand.nextInt(10); // easier than Math.random, generates a random number between 0 and 9
             xPos = rand.nextInt(10);
-            int alignGen = rand.nextInt(2); // Generate a random number between 0 and 1
-            String alignment; // Create string to hold alignment
-            if (alignGen == 0) { // if number is 0
-                alignment = "h";
+            int alignment = rand.nextInt(2); // Generate a random number between 0 and 1
+            // 0 is horizontal, 1 is vertical
+            if (alignment == 0) { // if number is 0
                 xPos = rand.nextInt(11 - shipSize); // Generate a random number between 0 and 10-shipSize
                 // My logic is if the ship size is 3 it would 9-3 then it would be 0-6.
                 // So if it generates the max number (6) the ship would only reach 8, instead of 9 (the edge of the board)
             } else { // if number is 1
-                alignment = "v";
                 yPos = rand.nextInt(11 - shipSize);
             }
-            // Convert yPos and xPos to string
-            String yPosString = Character.toString((char) (yPos + 97));
-            String xPosString = Integer.toString(xPos);
-            // Connect the two strings together to form a two character string
-            String positions = xPosString + yPosString;
-
             // Check if the ship can be placed
-            if (checkPlaceable(positions, alignment, shipSize)) {
-                placeShips(positions, alignment, shipSize, shipType); // Place the ship
+            if(botCheckPlaceable(alignment, shipSize)) {
+                botPlace(alignment, shipSize, shipType); // Place the ship
                 placed = true; // Set boolean to true
             }
-            viewBoard(); // View the board
+        }
+    }
+
+    public boolean botCheckPlaceable(int alignment, int shipSize) {
+        if(alignment==0) { // if player horizontal alignment
+            for(int x=xPos; x<shipSize+xPos; x++) { // loop for shipSize through xPos
+                if(grids[x][yPos][playerNumber]!=0) { // if there is an overlap
+                    System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
+                    viewBoard(); // View the board
+                    return false; // return
+                }
+            }
+        }
+        if(alignment==1) { // Ff player chose vertical alignment
+            for(int y=yPos; y<shipSize+yPos; y++) { // loop for shipSize through yPos
+                if(grids[xPos][y][playerNumber]!=0) { // if there is an overlap
+                    System.out.println("An overlap has been detected, please try again.\nHere is your current board"); // print error
+                    viewBoard(); // View the board
+                    return false; // return
+                }
+            }
+        }
+        return true; // If there are no overlaps then return true
+    }
+
+    public void botPlace(int alignment, int shipSize, int shipType) {
+        if(alignment==0) { // if player horizontal alignment
+            for(int x=xPos; x<shipSize+xPos; x++) { // loop for shipSize through xPos
+                grids[x][yPos][playerNumber] = shipSize * shipType; // set cell number to ship type
+            }
+        }
+        if(alignment==1) { // Ff player chose vertical alignment
+            for(int y=yPos; y<shipSize+yPos; y++) { // loop for shipSize through yPos
+                grids[xPos][y][playerNumber] = shipSize * shipType;
+            }
         }
     }
 }

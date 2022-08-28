@@ -76,6 +76,7 @@ public class Main {
                 players[c].botShipSetup(1, x);
             }
             players[c].botShipSetup(2, 3);
+            players[c].viewBoard();
         }
 
         // Clear the screen
