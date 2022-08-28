@@ -16,8 +16,6 @@ public class Main {
 
     final static int GRIDSIZE = 10; // Size of grid, do not set above 10, you will break the program due to how position input is taken.
 
-    public static int whichPlayer = 0; // Which player is currently playing, starts at 0 because it is the first player to play.
-
     public static String position; // Where the position will be saved temporarily
     public static String alignment; // Where the alignment will be saved temporarily
 
@@ -45,15 +43,18 @@ public class Main {
 
         for (int c=0;c<HUMANCOUNT;c++) {
             for (int x = 2; x < 6; x++) { // Ask for input, check, then place the ships
-                position = askPosInput(); // Ask for input for positions
-                while (!checkPosInput(position)){ // This will only loop if the previous input is invalid
-                    position = askPosInput();
+                boolean placeable = false;
+                while(!placeable) {
+                    position = askPosInput(); // Ask for input for positions
+                    while (!checkPosInput(position)) { // This will only loop if the previous input is invalid
+                        position = askPosInput();
+                    }
+                    alignment = askAlignInput(); // Ask for input for alignment
+                    while (!checkAlignInput(alignment)) { // This will only loop if the previous input is invalid
+                        alignment = askAlignInput();
+                    }
+                    placeable = players[c].checkPlaceable(position, alignment, x);
                 }
-                alignment = askAlignInput(); // Ask for input for alignment
-                while (!checkAlignInput(alignment, x, 1)){ // This will only loop if the previous input is invalid
-                    alignment = askAlignInput();
-                }
-                players[c].checkPlaceable(position, alignment, x);
                 players[c].placeShips(position, alignment, x, 1);
                 players[c].viewBoard();
             }
@@ -63,7 +64,7 @@ public class Main {
                 position = askPosInput();
             }
             alignment = askAlignInput(); // Ask for input for alignment
-            while (!checkAlignInput(alignment, 3, 1)){ // This will only loop if the previous input is invalid
+            while (!checkAlignInput(alignment)){ // This will only loop if the previous input is invalid
                 alignment = askAlignInput();
             }
             players[c].checkPlaceable(position, alignment, 3);
@@ -76,23 +77,50 @@ public class Main {
                 players[c].botShipSetup(1, x);
             }
             players[c].botShipSetup(2, 3);
-            players[c].viewBoard();
         }
-
-        // Clear the screen
-        System.out.print("\033[H\033[2J");
 
         boolean gameRunning = true; // Boolean to check if the game is running, true by default.
-
+        int whichPlayerTurn = 0; // Which player's turn it is, 0 by default.
         while (gameRunning) { // Because I want the game to end when player board is empty, not after all player have had their turn and a board is empty
-            if(whichPlayer < PLAYERCOUNT) { // If the player is not at/above the player count
-                whichPlayer++; // Increments which player is currently playing
-            }
-            else {
-                whichPlayer = 0; // Resets which player is currently playing
+            if(whichPlayerTurn < PLAYERCOUNT) { // If the player is not at/above the player count
+                players[whichPlayerTurn].viewBoard();
+                // Clear the screen
+                System.out.print("\033[H\033[2J");
+                System.out.println("It is Player "+whichPlayerTurn+"'s turn.");
+                String input = players[whichPlayerTurn].takeTurn(); // Take the turn
+                if (input.equals("quit")) { // If the player inputs quit, the game will end
+                    gameRunning = false;
+                } else {
+                    if(checkPosInput(input)) {
+                        int shipHit;
+                        int otherPlayer;
+                        if(whichPlayerTurn==1) { // If the player is player 1
+                            otherPlayer = 0;
+                        } else { // If the player is player 2
+                            otherPlayer = 1;
+                        }
+                        shipHit = players[otherPlayer].checkHit(input); // Check if the player hit a ship
+
+                        if(shipHit == 1) { // If the player hit a ship
+                            System.out.println("\nPlayer "+whichPlayerTurn+" hit a ship!\n");
+                        } else if (shipHit == 2) { // If the player hit a ship and it was sunk
+                            System.out.println("\nPlayer "+whichPlayerTurn+" sunk a ship!\n");
+                            gameRunning = !players[otherPlayer].isGameOver(); // Check if the player's game is over
+                        }
+                        else { // If the player didn't hit a ship
+                            System.out.println("\nPlayer "+whichPlayerTurn+" missed!\n");
+                        }
+                    } else {
+                        System.out.println("you can also type 'quit' to end the game.");
+                    }
+                }
+
+                whichPlayerTurn++; // Increments which player is currently playing
+            } else {
+                whichPlayerTurn = 0; // Resets which player is currently playing
             }
         }
-        System.out.print("Game over"); // Tell the player the game is over, this wil be updated to be better later.
+        System.out.println("----------\nGame ended.\n----------"); // Tell the player the game is over
     }
 
     public static String askPosInput() {
@@ -125,7 +153,7 @@ public class Main {
         System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position\nYou must enter one letter (from a-j) and one number (0-9)"); // If the input is not valid, tell the user to try again
         return false;
     }
-    public static boolean checkAlignInput(String alignment, int shipSize, int shipType) { // Checks if the position is valid
+    public static boolean checkAlignInput(String alignment) { // Checks if the position is valid
         if(!alignment.equals("H")&&!alignment.equals("V")&&!alignment.equals("h")&&!alignment.equals("v")) {
             System.out.println("\nYou have entered and invalid input.\nPlease enter a valid position.\nValid input is 'V' or 'H'");
         }

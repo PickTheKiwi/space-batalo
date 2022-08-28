@@ -7,6 +7,7 @@
  * @version 1
  */
 import java.util.Random;
+import java.util.Scanner;
 
 public class Player {
     public int players; // Amount of players
@@ -40,9 +41,9 @@ public class Player {
 
     public void viewBoard() {
         // print the grid
-        char Character = '\u0041';
         System.out.println("\n");
         for (int z = 0; z < players; z++) {
+            char Character = '\u0041';
             int column = 0;
             System.out.print("X|"); // Prints the X in the top left corner
             for (int x = 0; x < gridSize; x++) {
@@ -68,18 +69,20 @@ public class Player {
     }
 
     // check if the board has had all ships removed
-    public boolean isGameOver(int playerNumber) {
+    public boolean isGameOver() {
         int count = 0;
         // loop for each cell (with the x, y, and x loops)
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
                 if (grids[x][y][playerNumber] == 0 || grids[x][y][playerNumber] == 9) {
-                        count++; // if cell is empty (0) or hit (9), increment count
+                    count++; // if cell is empty (0) or hit (9), increment count
+                } else {
+                    return false;
                 }
             }
         }
         // if each cell is either empty or hit. return true, otherwise return false
-        return count == (gridSize * gridSize); // Initially an if statement, but I realised it could be simplified
+        return count == (gridSize * gridSize); // if count is equal to the amount of cells in the grid, return true, otherwise return false
     }
 
     public boolean checkPlaceable(String positions, String alignment, int shipSize) {
@@ -197,6 +200,49 @@ public class Player {
             for(int y=yPos; y<shipSize+yPos; y++) { // loop for shipSize through yPos
                 grids[xPos][y][playerNumber] = shipSize * shipType;
             }
+        }
+    }
+
+    public String takeTurn() {
+        if(!isBot) {
+            Scanner keyboard = new Scanner(System.in); // Create a scanner to get input from the user, wasn't needed until now
+            System.out.println("Where would you like to fire? (type 'quit' to end the game)"); // Ask for input for positions
+            return keyboard.nextLine(); // Save the input to a string
+        } else {
+            Random rand = new Random(); // Create random object
+            int x = rand.nextInt(10); // Generate a random number between 0 and 9
+            int intY = rand.nextInt(10); // Generate a random number between 0 and 9
+            char charY = (char)(intY + 97); // Convert number to letter
+            return x + "" + charY; // Return the x and y positions as a string
+        }
+    }
+
+    public int checkHit(String positions) {
+        String tempXPos = positions.replaceAll("\\D", ""); // Remove all non-numeric characters from the string
+        // Convert number in string to actual number
+        xPos = Integer.parseInt(tempXPos); // Change character into number
+        String tempYPos = positions.replaceAll("[^a-jA-J]", ""); // Remove all non-alphabetic characters from the string.
+        if (!Character.isUpperCase(tempYPos.charAt(0))) { // If character is not uppercase
+            yPos = tempYPos.charAt(0) - 97; // Change lowercase letter to number and assign to yPos
+        }
+        if (Character.isUpperCase(tempYPos.charAt(0))) { // If character is uppercase
+            yPos = tempYPos.charAt(0) - 65; // Change uppercase letter to number and assign to yPos
+        }
+        if (grids[xPos][yPos][playerNumber] == 0 || grids[xPos][yPos][playerNumber] == 9 ) { // If the cell is empty
+            return 0; // return 0, meaning missed
+        } else { // If the cell is not empty
+            int shipHit = grids[xPos][yPos][playerNumber]; // Save the ship number to shipHit
+            grids[xPos][yPos][playerNumber] = 9; // Set the cell to 9 to indicate a hit
+            // loop for each cell (with the x, y, and x loops)
+            for (int y = 0; y < gridSize; y++) {
+                for (int x = 0; x < gridSize; x++) {
+                    if (grids[x][y][playerNumber] == shipHit) { // If the cell is the same as the shipHit
+                        return 1; // return 1, meaning hit but not sunk
+                    }
+                }
+            }
+            return 2; // return 2, meaning sunk
+            // if each cell is either empty or hit. return true, otherwise return false
         }
     }
 }
