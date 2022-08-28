@@ -40,31 +40,33 @@ public class Player {
     }
 
     public void viewBoard() {
-        // print the grid
-        System.out.println("\n");
-        for (int z = 0; z < players; z++) {
-            char Character = '\u0041';
-            int column = 0;
-            System.out.print("X|"); // Prints the X in the top left corner
-            for (int x = 0; x < gridSize; x++) {
-                System.out.print(column + " "); // Prints the column numbers above the grid
-                column++; // Increments the column number
-            }
-            System.out.println();
-            System.out.print("-+"); // Just to make it look nicer
-            for (int x = 0; x < (gridSize * 2) - 1; x++) {
-                System.out.print("-"); // Prints divider between row numbers and grid
-            }
-
-            for (int y = 0; y < gridSize; y++) {
-                System.out.println(); // Prints to next line
-                System.out.print(Character + "|"); // Prints the row numbers to the left of the grid
-                Character++; // Increments the row number
+        if(!isBot) {
+            // print the grid
+            System.out.println("\n");
+            for (int z = 0; z < players; z++) {
+                char Character = '\u0041';
+                int column = 0;
+                System.out.print("X|"); // Prints the X in the top left corner
                 for (int x = 0; x < gridSize; x++) {
-                    System.out.print(grids[x][y][z] + " "); // Prints the cell in the grid
+                    System.out.print(column + " "); // Prints the column numbers above the grid
+                    column++; // Increments the column number
                 }
+                System.out.println();
+                System.out.print("-+"); // Just to make it look nicer
+                for (int x = 0; x < (gridSize * 2) - 1; x++) {
+                    System.out.print("-"); // Prints divider between row numbers and grid
+                }
+
+                for (int y = 0; y < gridSize; y++) {
+                    System.out.println(); // Prints to next line
+                    System.out.print(Character + "|"); // Prints the row numbers to the left of the grid
+                    Character++; // Increments the row number
+                    for (int x = 0; x < gridSize; x++) {
+                        System.out.print(grids[x][y][z] + " "); // Prints the cell in the grid
+                    }
+                }
+                System.out.println("\n"); // Creates a gap between the boards
             }
-            System.out.println("\n"); // Creates a gap between the boards
         }
     }
 
