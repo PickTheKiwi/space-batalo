@@ -21,12 +21,16 @@ public class Main {
 
     public static Player[] players;
     public static void main(String[] args) {
-
-
         if (args.length != 0) {
             System.out.println("\nArguments are not needed to run the game.\nPlease run the game without any arguments to play.\n");
             System.exit(2); // We don't need arguments for the game to run
         }
+
+        System.out.println("Welcome to Space Batalo!");
+        System.out.println("In this game you will be asked to input positions.");
+        System.out.println("At the start you will be setting up your board.");
+        System.out.println("Then you will face a bot in who can knock the other ships out first.");
+        System.out.println("Good luck and have fun!.");
 
         // load the Player class into as many objects as PLAYERCOUNT is
         players = new Player[PLAYERCOUNT];
