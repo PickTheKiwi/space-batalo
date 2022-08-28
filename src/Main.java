@@ -83,13 +83,13 @@ public class Main {
             players[c].botShipSetup(2, 3);
         }
 
+        // Clear the screen
+        System.out.print("\033[H\033[2J");
         boolean gameRunning = true; // Boolean to check if the game is running, true by default.
         int whichPlayerTurn = 0; // Which player's turn it is, 0 by default.
         while (gameRunning) { // Because I want the game to end when player board is empty, not after all player have had their turn and a board is empty
             if(whichPlayerTurn < PLAYERCOUNT) { // If the player is not at/above the player count
                 players[whichPlayerTurn].viewBoard();
-                // Clear the screen
-                System.out.print("\033[H\033[2J");
                 System.out.println("It is Player "+whichPlayerTurn+"'s turn.");
                 String input = players[whichPlayerTurn].takeTurn(); // Take the turn
                 if (input.equals("quit")) { // If the player inputs quit, the game will end
