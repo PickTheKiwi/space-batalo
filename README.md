@@ -2,6 +2,8 @@
 
 This is a small game I decided to make for my year 12 class in Java.
 
+## I'm remaking this in V, find it [here](https://github.com/PickJ888/batalo-v)
+
 ## Dependencies
 - A JDK (If you're compiling on your own computer, you can use the JDK you have installed on your computer. If you're compiling on a computer with a JDK installed, you can use the JDK you have installed on that computer.)
 - A JVM (version 17 if you're running the version I compiled, otherwise use the version you have installed on your computer)
